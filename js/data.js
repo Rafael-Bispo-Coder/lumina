@@ -102,18 +102,18 @@ const CLASSES = [
 
 /** @type {Student[]} */
 const STUDENTS = [
-  { id: 1,  name: 'Lucas Almeida',      classId: 1, points: 120 },
-  { id: 2,  name: 'Marina Souza',       classId: 1, points: 95  },
-  { id: 3,  name: 'Pedro Oliveira',     classId: 1, points: 140 },
-  { id: 4,  name: 'Fernanda Lima',      classId: 2, points: 80  },
-  { id: 5,  name: 'Rafael Santos',      classId: 2, points: 110 },
-  { id: 6,  name: 'Juliana Ferreira',   classId: 2, points: 75  },
-  { id: 7,  name: 'Gabriel Costa',      classId: 3, points: 160 },
-  { id: 8,  name: 'Isabela Rodrigues',  classId: 3, points: 130 },
-  { id: 9,  name: 'Thiago Carvalho',    classId: 4, points: 50  },
-  { id: 10, name: 'Camila Martins',     classId: 4, points: 90  },
-  { id: 11, name: 'Diego Nascimento',   classId: 5, points: 70  },
-  { id: 12, name: 'Larissa Barbosa',    classId: 5, points: 115 },
+  { id: 1,  name: 'Lucas Almeida',      username: 'aluno.lucas',     password: 'aluno123', classId: 1, points: 120, enrollmentYear: 2026, status: 'active' },
+  { id: 2,  name: 'Marina Souza',       username: 'aluno.marina',    password: 'aluno123', classId: 1, points: 95,  enrollmentYear: 2026, status: 'active' },
+  { id: 3,  name: 'Pedro Oliveira',     username: 'aluno.pedro',     password: 'aluno123', classId: 1, points: 140, enrollmentYear: 2026, status: 'active' },
+  { id: 4,  name: 'Fernanda Lima',      username: 'aluno.fernanda',  password: 'aluno123', classId: 2, points: 80,  enrollmentYear: 2026, status: 'active' },
+  { id: 5,  name: 'Rafael Santos',      username: 'aluno.rafael',    password: 'aluno123', classId: 2, points: 110, enrollmentYear: 2026, status: 'active' },
+  { id: 6,  name: 'Juliana Ferreira',   username: 'aluno.juliana',   password: 'aluno123', classId: 2, points: 75,  enrollmentYear: 2026, status: 'active' },
+  { id: 7,  name: 'Gabriel Costa',      username: 'aluno.gabriel',   password: 'aluno123', classId: 3, points: 160, enrollmentYear: 2026, status: 'active' },
+  { id: 8,  name: 'Isabela Rodrigues',  username: 'aluno.isabela',   password: 'aluno123', classId: 3, points: 130, enrollmentYear: 2026, status: 'active' },
+  { id: 9,  name: 'Thiago Carvalho',    username: 'aluno.thiago',    password: 'aluno123', classId: 4, points: 50,  enrollmentYear: 2026, status: 'active' },
+  { id: 10, name: 'Camila Martins',     username: 'aluno.camila',    password: 'aluno123', classId: 4, points: 90,  enrollmentYear: 2026, status: 'active' },
+  { id: 11, name: 'Diego Nascimento',   username: 'aluno.diego',     password: 'aluno123', classId: 5, points: 70,  enrollmentYear: 2026, status: 'active' },
+  { id: 12, name: 'Larissa Barbosa',    username: 'aluno.larissa',   password: 'aluno123', classId: 5, points: 115, enrollmentYear: 2026, status: 'active' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -283,6 +283,26 @@ const QUIZZES = [
 ];
 
 // ---------------------------------------------------------------------------
+// Coordination
+// ---------------------------------------------------------------------------
+
+/**
+ * @typedef {Object} CoordUser
+ * @property {number} id       - Unique identifier
+ * @property {string} username - Login username
+ * @property {string} password - Plain-text password (prototype only)
+ * @property {string} name     - Display name
+ * @property {string} email    - E-mail address
+ * @property {string} avatar   - Initials used for the avatar badge
+ * @property {string} role     - Always 'coordination'
+ */
+
+/** @type {CoordUser[]} */
+const COORDINATION = [
+  { id: 1, username: 'coord', password: 'coord123', name: 'Coordenação Geral', email: 'coord@escola.edu.br', avatar: 'CG', role: 'coordination' },
+];
+
+// ---------------------------------------------------------------------------
 // Exports (available globally in non-module scripts)
 // ---------------------------------------------------------------------------
 
@@ -291,9 +311,11 @@ const QUIZZES = [
  * In production, replace with real API calls.
  */
 const AppData = {
-  teachers: TEACHERS,
-  classes:  CLASSES,
-  students: STUDENTS,
-  videos:   VIDEOS,
-  quizzes:  QUIZZES,
+  teachers:     TEACHERS,
+  classes:      CLASSES,
+  students:     STUDENTS,
+  videos:       VIDEOS,
+  quizzes:      QUIZZES,
+  coordination: COORDINATION,
+  currentYear:  2026,
 };

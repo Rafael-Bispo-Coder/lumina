@@ -30,9 +30,11 @@
   --color-primary-dark:  #574fd4;
   --color-primary-light: #ebe9ff;
   --color-secondary:     #3b82f6;
-  --color-accent-green:  #10b981;
-  --color-accent-orange: #f59e0b;
-  --color-accent-red:    #ef4444;
+  --color-accent-green:        #10b981;
+  --color-accent-green-light:  #d1fae5;
+  --color-accent-blue-light:   #dbeafe;
+  --color-accent-orange:       #f59e0b;
+  --color-accent-red:          #ef4444;
 
   /* Neutral palette */
   --color-bg:            #f4f6fb;
@@ -1241,6 +1243,189 @@ p { color: var(--color-text-muted); }
   padding: 4rem;
   color: var(--color-text-muted);
 }
+
+/* ============================================================
+   18. Mascot (Lumi)
+   ============================================================ */
+.mascot-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}
+.mascot-label {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes mascot-wave {
+  0%   { transform: rotate(-30deg); }
+  100% { transform: rotate(30deg); }
+}
+@keyframes mascot-blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95%           { transform: scaleY(0.1); }
+}
+.mascot-float {
+  animation: mascot-float 3s ease-in-out infinite;
+}
+.mascot-wave {
+  animation: mascot-wave 0.8s ease-in-out infinite alternate;
+  transform-origin: 88px 100px;
+}
+.mascot-blink {
+  animation: mascot-blink 3s ease-in-out infinite;
+}
+
+/* ============================================================
+   19. Role Tabs (login page)
+   ============================================================ */
+.role-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--color-border);
+}
+.role-tab {
+  flex: 1;
+  padding: 0.6rem 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-align: center;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.role-tab:hover { color: var(--color-primary); }
+.role-tab--active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ============================================================
+   20. Login split layout
+   ============================================================ */
+.login-page--split {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+.login-split {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  max-width: 860px;
+  width: 100%;
+}
+.login-split .login-card {
+  flex: 1;
+  max-width: 420px;
+}
+.login-split-mascot {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media (max-width: 700px) {
+  .login-split { flex-direction: column; gap: 1.5rem; }
+  .login-split-mascot { display: none; }
+}
+
+/* ============================================================
+   21. Status badges
+   ============================================================ */
+.status-badge {
+  display: inline-block;
+  padding: 0.2em 0.6em;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.status-badge--active   { background: #d1fae5; color: #065f46; }
+.status-badge--pending  { background: #fef3c7; color: #92400e; }
+.status-badge--inactive { background: #f3f4f6; color: #6b7280; }
+
+/* ============================================================
+   22. Data table
+   ============================================================ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.data-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface);
+  border-bottom: 2px solid var(--color-border);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--color-surface); }
+
+/* ============================================================
+   23. Bar chart
+   ============================================================ */
+.bar-chart { display: flex; flex-direction: column; gap: 0.75rem; }
+.bar-chart-item {}
+.bar-chart-label { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 0.25rem; }
+.bar-chart-bar-wrap { display: flex; align-items: center; gap: 0.5rem; }
+.bar-chart-bar { height: 20px; border-radius: 4px; min-width: 4px; transition: width 0.4s ease; }
+.bar-chart-value { font-size: 0.8rem; font-weight: 600; color: var(--color-text); white-space: nowrap; }
+
+/* ============================================================
+   24. Modal form grid
+   ============================================================ */
+.modal-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 500px) {
+  .modal-form-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   25. Small & danger button variants
+   ============================================================ */
+.btn-sm { padding: 0.3rem 0.65rem; font-size: 0.8rem; }
+.btn-danger {
+  background: var(--color-accent-red, #ef4444);
+  color: #fff;
+  border: none;
+}
+.btn-danger:hover { background: #dc2626; }
+
+/* ============================================================
+   26. Sidebar student / coord accents
+   ============================================================ */
+.sidebar--student .brand-icon { background: var(--color-accent-green-light, #d1fae5); color: var(--color-accent-green, #10b981); }
+.topbar--student { border-bottom-color: var(--color-accent-green, #10b981); }
+.sidebar--coord .brand-icon { background: #fef3c7; color: var(--color-accent-orange, #f59e0b); }
+.topbar--coord { border-bottom-color: var(--color-accent-orange, #f59e0b); }
+.student-avatar { background: var(--color-accent-green, #10b981) !important; }
+.coord-avatar { background: var(--color-accent-orange, #f59e0b) !important; }
 
 /* ============================================================
    17. Responsive

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Lumina – Plataforma educacional para professores. Faça login para acessar suas turmas, vídeos e quizzes." />
+  <meta name="description" content="Lumina – Plataforma educacional. Faça login como aluno, professor ou coordenação." />
   <title>Lumina – Login</title>
 
   <!-- Preconnect for Google Fonts -->
@@ -13,7 +13,41 @@
 
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body class="login-page">
+<body class="login-page login-page--split">
+
+  <div class="login-split">
+
+  <!-- Mascot (hidden on mobile) -->
+  <div class="login-split-mascot">
+    <div class="mascot-container">
+      <svg class="mascot-float" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" width="140" height="175" aria-label="Lumi, mascote do Lumina" role="img">
+        <!-- Body -->
+        <ellipse cx="60" cy="105" rx="28" ry="22" fill="#6366f1"/>
+        <!-- Head -->
+        <circle cx="60" cy="65" r="30" fill="#fbbf24"/>
+        <!-- Star accent on head -->
+        <polygon points="60,38 63,48 73,48 65,54 68,64 60,58 52,64 55,54 47,48 57,48" fill="#f59e0b" opacity="0.7"/>
+        <!-- Eyes -->
+        <ellipse class="mascot-blink" cx="50" cy="62" rx="5" ry="6" fill="#1e1b4b"/>
+        <ellipse class="mascot-blink" cx="70" cy="62" rx="5" ry="6" fill="#1e1b4b"/>
+        <!-- Eye shine -->
+        <circle cx="52" cy="60" r="2" fill="white"/>
+        <circle cx="72" cy="60" r="2" fill="white"/>
+        <!-- Smile -->
+        <path d="M 48 74 Q 60 84 72 74" stroke="#1e1b4b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Left arm (static) -->
+        <line x1="32" y1="100" x2="14" y2="118" stroke="#6366f1" stroke-width="8" stroke-linecap="round"/>
+        <!-- Right arm (waving) -->
+        <g class="mascot-wave" style="transform-origin: 88px 100px;">
+          <line x1="88" y1="100" x2="106" y2="82" stroke="#6366f1" stroke-width="8" stroke-linecap="round"/>
+        </g>
+        <!-- Feet -->
+        <ellipse cx="48" cy="126" rx="10" ry="6" fill="#4f46e5"/>
+        <ellipse cx="72" cy="126" rx="10" ry="6" fill="#4f46e5"/>
+      </svg>
+      <p class="mascot-label">Olá! Eu sou a Lumi! ✨</p>
+    </div>
+  </div>
 
   <main class="login-card" role="main">
 
@@ -28,7 +62,14 @@
         </svg>
       </div>
       <h1>Lumina</h1>
-      <p>Plataforma educacional para professores</p>
+      <p>Plataforma educacional</p>
+    </div>
+
+    <!-- Role selector tabs -->
+    <div class="role-tabs" role="tablist" aria-label="Tipo de acesso">
+      <button class="role-tab" data-role="student"      role="tab" aria-selected="false" type="button">Aluno</button>
+      <button class="role-tab role-tab--active" data-role="teacher" role="tab" aria-selected="true"  type="button">Professor</button>
+      <button class="role-tab" data-role="coordination" role="tab" aria-selected="false" type="button">Coordenação</button>
     </div>
 
     <!-- Error message (hidden initially) -->
@@ -36,6 +77,8 @@
 
     <!-- Login form -->
     <form id="login-form" class="login-form" novalidate autocomplete="on">
+
+      <input type="hidden" id="role" name="role" value="teacher" />
 
       <div class="form-group">
         <label for="username">Usuário</label>
@@ -105,7 +148,7 @@
     </form>
 
     <!-- Demo credentials hint -->
-    <div class="demo-hint" aria-label="Credenciais de demonstração">
+    <div class="demo-hint" id="demo-hint" aria-label="Credenciais de demonstração">
       <p>🔑 Credenciais de demonstração:</p>
       <p><code>ana.silva</code> / <code>senha123</code></p>
       <p><code>carlos.mendes</code> / <code>senha456</code></p>
@@ -114,36 +157,86 @@
 
   </main>
 
-  <!-- Scripts (data first, then auth, then app logic) -->
+  </div><!-- /.login-split -->
+
   <script src="js/data.js"></script>
   <script src="js/auth.js"></script>
   <script>
     /**
      * Login page controller.
-     * Handles form submission, loading state, show/hide password.
+     * Handles form submission, loading state, show/hide password, role tabs.
      */
     (function () {
       'use strict';
 
-      // Redirect to dashboard if already logged in
-      if (Auth.getCurrentTeacher()) {
+      // Redirect if any role session already exists
+      if (Auth.getCurrentUser('teacher')) {
         window.location.replace('dashboard.html');
+      } else if (Auth.getCurrentUser('student')) {
+        window.location.replace('student-dashboard.html');
+      } else if (Auth.getCurrentUser('coordination')) {
+        window.location.replace('coordination.html');
       }
 
-      const form    = document.getElementById('login-form');
-      const btn     = document.getElementById('login-btn');
-      const errorEl = document.getElementById('login-error');
-      const pwInput = document.getElementById('password');
+      const ROLE_DASHBOARDS = {
+        teacher:     'dashboard.html',
+        student:     'student-dashboard.html',
+        coordination: 'coordination.html',
+      };
+
+      const DEMO_CREDENTIALS = {
+        teacher: [
+          ['ana.silva',     'senha123'],
+          ['carlos.mendes', 'senha456'],
+          ['beatriz.costa', 'senha789'],
+        ],
+        student: [
+          ['aluno.lucas',  'aluno123'],
+          ['aluno.marina', 'aluno123'],
+        ],
+        coordination: [
+          ['coord', 'coord123'],
+        ],
+      };
+
+      const form       = document.getElementById('login-form');
+      const btn        = document.getElementById('login-btn');
+      const errorEl    = document.getElementById('login-error');
+      const pwInput    = document.getElementById('password');
+      const roleInput  = document.getElementById('role');
+      const demoHint   = document.getElementById('demo-hint');
       const toggleBtn  = document.getElementById('toggle-pw');
       const eyeIcon    = document.getElementById('eye-icon');
       const eyeOffIcon = document.getElementById('eye-off-icon');
 
+      /* Role tabs */
+      document.querySelectorAll('.role-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.role-tab').forEach((t) => {
+            t.classList.remove('role-tab--active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('role-tab--active');
+          tab.setAttribute('aria-selected', 'true');
+          const role = tab.dataset.role;
+          roleInput.value = role;
+          updateDemoHint(role);
+          errorEl.hidden = true;
+        });
+      });
+
+      function updateDemoHint(role) {
+        const creds = DEMO_CREDENTIALS[role] || [];
+        const lines = creds.map(([u, p]) => `<p><code>${u}</code> / <code>${p}</code></p>`).join('');
+        demoHint.innerHTML = `<p>🔑 Credenciais de demonstração:</p>${lines}`;
+      }
+
       /* Show/hide password */
       toggleBtn.addEventListener('click', () => {
         const isHidden = pwInput.type === 'password';
-        pwInput.type           = isHidden ? 'text' : 'password';
-        eyeIcon.style.display    = isHidden ? 'none'  : '';
-        eyeOffIcon.style.display = isHidden ? ''      : 'none';
+        pwInput.type             = isHidden ? 'text' : 'password';
+        eyeIcon.style.display    = isHidden ? 'none' : '';
+        eyeOffIcon.style.display = isHidden ? ''     : 'none';
         toggleBtn.setAttribute('aria-label', isHidden ? 'Ocultar senha' : 'Mostrar senha');
       });
 
@@ -153,29 +246,25 @@
 
         const username = document.getElementById('username').value;
         const password = pwInput.value;
+        const role     = roleInput.value;
 
-        // Show loading state
         btn.disabled = true;
         btn.classList.add('loading');
         errorEl.hidden = true;
 
-        // Simulate a brief network delay for realism
         setTimeout(() => {
-          const result = Auth.login(username, password);
+          const result = Auth.login(username, password, role);
 
           if (result.success) {
-            window.location.href = 'dashboard.html';
+            window.location.href = ROLE_DASHBOARDS[role] || 'dashboard.html';
           } else {
             errorEl.textContent = result.error;
             errorEl.hidden      = false;
             btn.disabled        = false;
             btn.classList.remove('loading');
-            // Shake animation on the card
             const card = document.querySelector('.login-card');
             card.style.animation = 'none';
-            requestAnimationFrame(() => {
-              card.style.animation = '';
-            });
+            requestAnimationFrame(() => { card.style.animation = ''; });
           }
         }, 300);
       });
