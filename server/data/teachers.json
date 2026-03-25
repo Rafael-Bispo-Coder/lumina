@@ -1,0 +1,12 @@
+[
+  {
+    "id": "teacher-1",
+    "name": "Carlos Professor",
+    "email": "prof@lumina.com",
+    "password": "$2a$10$A7eBSqsk8gw4cgornqLXHOh0unpY/ps6nTU8iIzB2GBOtC1n6n0qm",
+    "role": "professor",
+    "classIds": ["class-1", "class-2"],
+    "subjects": ["Matemática", "Física"],
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  }
+]

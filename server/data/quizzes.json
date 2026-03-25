@@ -1,0 +1,15 @@
+[
+  {
+    "id": "quiz-1",
+    "title": "Quiz de Álgebra",
+    "classId": "class-1",
+    "teacherId": "teacher-1",
+    "subject": "Matemática",
+    "questions": [
+      { "id": "q1", "text": "Quanto é 2x + 3 = 7? Encontre x.", "options": ["x=1", "x=2", "x=3", "x=4"], "correctIndex": 1 },
+      { "id": "q2", "text": "Qual é o valor de x² quando x=3?", "options": ["6", "9", "12", "18"], "correctIndex": 1 }
+    ],
+    "dueDate": "2024-02-01T00:00:00.000Z",
+    "createdAt": "2024-01-12T00:00:00.000Z"
+  }
+]

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumina – Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="dashboard-page">
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-icon">✦</span>
+        <span>Lumina</span>
+      </div>
+      <nav class="sidebar-nav" id="sidebarNav"></nav>
+    </aside>
+
+    <!-- Main -->
+    <div class="main-wrapper">
+      <header class="app-header">
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Menu">☰</button>
+        <div class="header-user">
+          <div>
+            <span id="headerName" class="header-name">Carregando...</span>
+            <span id="headerRole" class="role-badge"></span>
+          </div>
+          <button class="btn btn-outline btn-sm" id="logoutBtn">Sair</button>
+        </div>
+      </header>
+      <main class="content-area" id="content">
+        <div class="loading-spinner">Carregando...</div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

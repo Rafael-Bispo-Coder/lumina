@@ -1,0 +1,4 @@
+[
+  { "id": "he-1", "studentId": "student-1", "type": "video_view", "refId": "video-1", "title": "Assistiu: Introdução à Álgebra", "subject": "Matemática", "date": "2024-01-11T10:00:00.000Z", "status": "concluido" },
+  { "id": "he-2", "studentId": "student-1", "type": "quiz_attempt", "refId": "quiz-1", "title": "Fez: Quiz de Álgebra", "subject": "Matemática", "date": "2024-01-20T14:00:00.000Z", "status": "corrigido" }
+]

@@ -1,0 +1,4 @@
+[
+  { "id": "video-1", "title": "Introdução à Álgebra", "description": "Conceitos básicos de álgebra", "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "classId": "class-1", "teacherId": "teacher-1", "subject": "Matemática", "createdAt": "2024-01-10T00:00:00.000Z" },
+  { "id": "video-2", "title": "Leis de Newton", "description": "As três leis de Newton", "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "classId": "class-1", "teacherId": "teacher-1", "subject": "Física", "createdAt": "2024-01-15T00:00:00.000Z" }
+]

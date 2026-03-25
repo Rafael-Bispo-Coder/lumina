@@ -1,0 +1,3 @@
+[
+  { "id": "qa-1", "quizId": "quiz-1", "studentId": "student-1", "score": 100, "answers": [1, 1], "status": "corrigido", "submittedAt": "2024-01-20T14:00:00.000Z", "gradedAt": "2024-01-21T09:00:00.000Z" }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "student-1",
+    "name": "Bruno Aluno",
+    "email": "aluno@lumina.com",
+    "password": "$2a$10$Mf9Ej10XwPe1S77dzGFUH.gtRGmq2Hv.qRaduOO2VvO/MDce0A3Xq",
+    "role": "aluno",
+    "classId": "class-1",
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  }
+]

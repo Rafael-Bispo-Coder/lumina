@@ -1,0 +1,3 @@
+[
+  { "id": "gr-1", "studentId": "student-1", "classId": "class-1", "subject": "Matemática", "type": "quiz", "refId": "quiz-1", "title": "Quiz de Álgebra", "score": 100, "maxScore": 100, "status": "corrigido", "date": "2024-01-21T09:00:00.000Z" }
+]

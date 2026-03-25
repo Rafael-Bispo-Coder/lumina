@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumina – Login</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="login-page">
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-logo">
+        <span class="logo-icon">✦</span>
+        <h1>Lumina</h1>
+        <p>Plataforma Educacional</p>
+      </div>
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="seu@email.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+        <div class="form-group">
+          <label for="role">Perfil de Acesso</label>
+          <select id="role" name="role" required>
+            <option value="">Selecione seu perfil</option>
+            <option value="aluno">Aluno</option>
+            <option value="professor">Professor</option>
+            <option value="coordenacao">Coordenação</option>
+          </select>
+        </div>
+        <div id="loginError" class="error-message" style="display:none;"></div>
+        <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
+          <span class="btn-text">Entrar</span>
+          <span class="btn-spinner" style="display:none;">Carregando...</span>
+        </button>
+      </form>
+      <div class="login-hint">
+        <small>Demo: aluno@lumina.com / aluno123</small>
+      </div>
+    </div>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    if (auth.isLoggedIn()) window.location.href = 'dashboard.html';
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+      const errorEl = document.getElementById('loginError');
+      const btn = document.getElementById('loginBtn');
+
+      errorEl.style.display = 'none';
+      btn.querySelector('.btn-text').style.display = 'none';
+      btn.querySelector('.btn-spinner').style.display = 'inline';
+      btn.disabled = true;
+
+      try {
+        await auth.login(email, password, role);
+        window.location.href = 'dashboard.html';
+      } catch (err) {
+        errorEl.textContent = err.message || 'Erro ao fazer login';
+        errorEl.style.display = 'block';
+      } finally {
+        btn.querySelector('.btn-text').style.display = 'inline';
+        btn.querySelector('.btn-spinner').style.display = 'none';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

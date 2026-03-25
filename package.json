@@ -1,0 +1,13 @@
+{
+  "name": "lumina",
+  "version": "1.0.0",
+  "description": "Lumina Educational Platform",
+  "scripts": {
+    "server": "cd server && node server.js",
+    "server:dev": "cd server && npx nodemon server.js",
+    "start": "cd server && node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

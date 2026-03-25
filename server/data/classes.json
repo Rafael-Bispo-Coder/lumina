@@ -1,0 +1,4 @@
+[
+  { "id": "class-1", "name": "Turma A - 2024", "teacherId": "teacher-1", "studentIds": ["student-1"], "subjects": ["Matemática", "Física"] },
+  { "id": "class-2", "name": "Turma B - 2024", "teacherId": "teacher-1", "studentIds": [], "subjects": ["Matemática"] }
+]

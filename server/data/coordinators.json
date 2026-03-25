@@ -1,0 +1,10 @@
+[
+  {
+    "id": "coord-1",
+    "name": "Ana Coordenadora",
+    "email": "coord@lumina.com",
+    "password": "$2a$10$S690sgl7bkH9h7jfMKxcqekEGndVGcgzqUWYevhK.GRjLvi89jPT6",
+    "role": "coordenacao",
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  }
+]
