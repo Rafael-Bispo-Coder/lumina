@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -19,6 +20,25 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30,
+  message: { error: 'Muitas tentativas. Tente novamente em 15 minutos.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+  message: { error: 'Limite de requisições excedido. Tente novamente em breve.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use('/api/auth', authLimiter);
+app.use('/api/', apiLimiter);
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
