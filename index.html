@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumina | Plataforma Educacional</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <section id="login-screen" class="login-screen">
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+        <article class="login-card" id="login-card">
+          <header class="login-header">
+            <div class="logo-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="logo-icon">
+                <path
+                  d="M12 2l2.5 5.5L20 10l-5.5 2.5L12 18l-2.5-5.5L4 10l5.5-2.5z"
+                ></path>
+              </svg>
+            </div>
+            <h1>Lumina</h1>
+            <p>Bem-vindo(a) de volta, professor(a).</p>
+          </header>
+
+          <form id="login-form" class="login-form" autocomplete="off">
+            <label for="username">Usuário</label>
+            <input id="username" name="username" type="text" placeholder="ana.silva" required />
+
+            <label for="password">Senha</label>
+            <div class="password-wrap">
+              <input id="password" name="password" type="password" placeholder="••••••••" required />
+              <button type="button" id="toggle-password" class="ghost-btn">Mostrar</button>
+            </div>
+
+            <p id="login-error" class="error-msg" role="alert"></p>
+
+            <button type="submit" class="primary-btn">Entrar</button>
+          </form>
+        </article>
+      </section>
+
+      <section id="app-shell" class="app-shell hidden" aria-live="polite">
+        <aside class="sidebar">
+          <div class="brand">
+            <div class="brand-logo">✦</div>
+            <div>
+              <strong>Lumina</strong>
+              <span>Portal Docente</span>
+            </div>
+          </div>
+          <nav class="menu" id="menu">
+            <button class="menu-item active" data-view="dashboard">Dashboard</button>
+            <button class="menu-item" data-view="turmas">Turmas</button>
+            <button class="menu-item" data-view="videos">Vídeos</button>
+            <button class="menu-item" data-view="quizzes">Quizzes</button>
+          </nav>
+          <button class="logout-btn" id="logout-btn">Sair</button>
+        </aside>
+
+        <div class="main-panel">
+          <header class="topbar">
+            <h2 id="view-title">Dashboard</h2>
+            <div class="pill" id="teacher-pill"></div>
+          </header>
+
+          <section id="view-container" class="view-container fade-in"></section>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
