@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  COORDINATION
+  TEACHER
+  STUDENT
+  ADMIN
+}
+
+enum QuizStatus {
+  DRAFT
+  ACTIVE
+  INACTIVE
+}
+
+enum AttemptStatus {
+  NOT_STARTED
+  STARTED
+  SUBMITTED
+}
+
+model User {
+  id             String         @id @default(cuid())
+  name           String
+  email          String         @unique
+  passwordHash   String
+  role           Role
+  active         Boolean        @default(true)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  taughtClasses  Class[]        @relation("ClassTeacher")
+  enrollments    ClassStudent[]
+  createdVideos  Video[]        @relation("VideoCreator")
+  quizzes        Quiz[]         @relation("QuizCreator")
+  videoViews     VideoView[]
+  quizAttempts   QuizAttempt[]
+  actions        ActivityLog[]  @relation("ActionActor")
+  forcedResets   PasswordReset[] @relation("ResetBy")
+  resetTargets   PasswordReset[] @relation("ResetTarget")
+}
+
+model Class {
+  id          String         @id @default(cuid())
+  name        String
+  subject     String
+  period      String
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  teacherId   String?
+  teacher     User?          @relation("ClassTeacher", fields: [teacherId], references: [id])
+  students    ClassStudent[]
+  videos      Video[]
+  quizzes     Quiz[]
+}
+
+model ClassStudent {
+  id         String   @id @default(cuid())
+  classId    String
+  studentId  String
+  createdAt  DateTime @default(now())
+  class      Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  student    User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, studentId])
+}
+
+model Video {
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  url         String
+  durationSec Int
+  classId     String
+  createdById String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  class       Class       @relation(fields: [classId], references: [id], onDelete: Cascade)
+  createdBy   User        @relation("VideoCreator", fields: [createdById], references: [id])
+  views       VideoView[]
+}
+
+model VideoView {
+  id                  String   @id @default(cuid())
+  videoId             String
+  studentId           String
+  watched             Boolean  @default(false)
+  watchedAt           DateTime?
+  progressPercent     Int      @default(0)
+  lastPositionSeconds Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  video               Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  student             User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([videoId, studentId])
+}
+
+model Quiz {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  classId     String
+  status      QuizStatus    @default(DRAFT)
+  maxScore    Int
+  questions   String
+  createdById String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  class       Class         @relation(fields: [classId], references: [id], onDelete: Cascade)
+  createdBy   User          @relation("QuizCreator", fields: [createdById], references: [id])
+  attempts    QuizAttempt[]
+}
+
+model QuizAttempt {
+  id         String        @id @default(cuid())
+  quizId     String
+  studentId  String
+  startedAt  DateTime?
+  finishedAt DateTime?
+  score      Int           @default(0)
+  maxScore   Int
+  status     AttemptStatus @default(NOT_STARTED)
+  answers    String?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  quiz       Quiz          @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  student    User          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([quizId, studentId])
+}
+
+model ActivityLog {
+  id          String   @id @default(cuid())
+  actorId     String
+  actorRole   Role
+  action      String
+  entity      String
+  entityId    String?
+  metadata    String?
+  createdAt   DateTime @default(now())
+  actor       User     @relation("ActionActor", fields: [actorId], references: [id])
+}
+
+model PasswordReset {
+  id         String   @id @default(cuid())
+  targetId   String
+  resetById  String
+  createdAt  DateTime @default(now())
+  target     User     @relation("ResetTarget", fields: [targetId], references: [id])
+  resetBy    User     @relation("ResetBy", fields: [resetById], references: [id])
+}
+
+model RefreshToken {
+  id         String   @id @default(cuid())
+  userId     String
+  tokenHash  String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  revokedAt  DateTime?
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
