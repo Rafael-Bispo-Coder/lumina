@@ -10,7 +10,13 @@ router.use(requireAuth);
 router.get('/', async (req, res) => {
   const { role, userId } = req.auth;
   if (role === 'COORDINATION' || role === 'ADMIN') {
-    const data = await prisma.class.findMany({ include: { teacher: true, students: true }, orderBy: { createdAt: 'desc' } });
+    const data = await prisma.class.findMany({
+      include: {
+        teacher: { select: { id: true, name: true, email: true, role: true } },
+        students: true,
+      },
+      orderBy: { createdAt: 'desc' },
+    });
     return res.json(data);
   }
 

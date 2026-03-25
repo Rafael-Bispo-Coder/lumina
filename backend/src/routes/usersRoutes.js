@@ -27,11 +27,11 @@ router.post('/', async (req, res) => {
     role: z.enum(['COORDINATION', 'TEACHER', 'STUDENT', 'ADMIN']),
   });
   const data = schema.parse(req.body);
+  const { password, ...rest } = data;
   const user = await prisma.user.create({
     data: {
-      ...data,
-      passwordHash: await hashPassword(data.password),
-      password: undefined,
+      ...rest,
+      passwordHash: await hashPassword(password),
     },
     select: { id: true, name: true, email: true, role: true, active: true },
   });

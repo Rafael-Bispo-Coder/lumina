@@ -4,6 +4,7 @@ import { prisma } from '../lib/prisma.js';
 import { authorize, requireAuth } from '../middleware/auth.js';
 import { canAccessClassAsStudent, canManageClass } from '../services/permissions.js';
 import { auditLog } from '../services/audit.js';
+import { env } from '../config/env.js';
 
 const router = Router();
 router.use(requireAuth);
@@ -124,7 +125,7 @@ router.post('/videos/:id/view', authorize('STUDENT'), async (req, res) => {
   const allowed = await canAccessClassAsStudent(req.auth.userId, video.classId);
   if (!allowed) return res.status(403).json({ message: 'Sem acesso ao vídeo.' });
 
-  const watched = progressPercent >= 90;
+  const watched = progressPercent >= env.WATCH_COMPLETION_PERCENT;
   const entry = await prisma.videoView.upsert({
     where: { videoId_studentId: { videoId: video.id, studentId: req.auth.userId } },
     update: {

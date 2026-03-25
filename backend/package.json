@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Lumina backend API",
   "main": "index.js",
   "scripts": {
     "test": "node --test",
@@ -9,8 +9,9 @@
     "start": "node src/server.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push",
     "prisma:seed": "node prisma/seed.js",
-    "lint": "node --check src/server.js"
+    "lint": "node --check src/server.js && node --check src/routes/authRoutes.js && node --check src/routes/usersRoutes.js && node --check src/routes/classesRoutes.js && node --check src/routes/contentRoutes.js && node --check src/routes/reportsRoutes.js && node --check src/routes/auditRoutes.js"
   },
   "keywords": [],
   "author": "",
@@ -18,10 +19,10 @@
   "type": "module",
   "devDependencies": {
     "nodemon": "^3.1.14",
-    "prisma": "^7.5.0"
+    "prisma": "^6.19.2"
   },
   "dependencies": {
-    "@prisma/client": "^7.5.0",
+    "@prisma/client": "^6.19.2",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",

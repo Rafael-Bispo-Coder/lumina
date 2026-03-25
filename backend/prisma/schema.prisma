@@ -44,6 +44,7 @@ model User {
   actions        ActivityLog[]  @relation("ActionActor")
   forcedResets   PasswordReset[] @relation("ResetBy")
   resetTargets   PasswordReset[] @relation("ResetTarget")
+  refreshTokens  RefreshToken[]
 }
 
 model Class {
