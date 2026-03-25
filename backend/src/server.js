@@ -11,6 +11,7 @@ import contentRoutes from './routes/contentRoutes.js';
 import reportsRoutes from './routes/reportsRoutes.js';
 import auditRoutes from './routes/auditRoutes.js';
 import { errorHandler } from './middleware/error.js';
+import { apiLimiter, authLimiter } from './middleware/rateLimit.js';
 import { env } from './config/env.js';
 
 const app = express();
@@ -25,9 +26,10 @@ app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
+app.use('/api', apiLimiter);
 
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/classes', classesRoutes);
 app.use('/api/content', contentRoutes);
