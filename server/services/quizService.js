@@ -102,7 +102,6 @@ function submitQuizAttempt(quizId, studentId, answers) {
   });
 
   // Record grade
-  const student = studentRepo.findById(studentId);
   gradeRepo.create({
     id: `gr-${uuidv4().slice(0, 8)}`,
     studentId,

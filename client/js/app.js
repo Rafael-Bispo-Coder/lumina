@@ -985,9 +985,6 @@ VIEWS['quiz-taker'] = async function(quizId) {
 
       content.querySelectorAll('input[type=radio]').forEach(radio => {
         radio.addEventListener('change', () => {
-          const [, qi, oi] = radio.name.replace('q','').split('-').length > 0
-            ? [null, parseInt(radio.name.replace('q','')), parseInt(radio.value)]
-            : [];
           const qIdx = parseInt(radio.name.replace('q',''));
           answers[qIdx] = parseInt(radio.value);
           content.querySelectorAll(`[id^="opt-${qIdx}-"]`).forEach(el => el.classList.remove('selected'));
