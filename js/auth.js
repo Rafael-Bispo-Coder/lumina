@@ -23,8 +23,9 @@ const Auth = (() => {
    * @param {import('./data.js').Teacher} teacher
    */
   function _saveSession(teacher) {
-    // Never store the password in the session – strip it out.
-    const sessionData = { ...teacher, password: undefined };
+    // Never store the password in the session – strip it out completely.
+    // eslint-disable-next-line no-unused-vars
+    const { password, ...sessionData } = teacher;
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
   }
 

@@ -564,7 +564,7 @@ function setupVideoForm(teacher) {
 
     // Add to the local data store (prototype only)
     const newVideo = {
-      id:          AppData.videos.length + 1,
+      id:          Math.max(...AppData.videos.map((v) => v.id), 0) + 1,
       teacherId:   teacher.id,
       classId,
       title,
@@ -602,6 +602,10 @@ function setupVideoForm(teacher) {
  * Set up the quiz creation form submit handler.
  */
 function setupQuizForm(teacher) {
+  // Reset the question counter each time the quizzes view is rendered
+  // to prevent numbering issues from previous visits to the view.
+  questionCount = 0;
+
   const form = document.getElementById('quiz-form');
   if (!form) return;
 
@@ -670,7 +674,7 @@ function setupQuizForm(teacher) {
 
     // Add to local store
     const newQuiz = {
-      id:          AppData.quizzes.length + 1,
+      id:          Math.max(...AppData.quizzes.map((q) => q.id), 0) + 1,
       teacherId:   teacher.id,
       classId,
       title,

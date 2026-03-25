@@ -1236,6 +1236,12 @@ p { color: var(--color-text-muted); }
   border-radius: var(--radius-lg);
 }
 
+.loading-message {
+  text-align: center;
+  padding: 4rem;
+  color: var(--color-text-muted);
+}
+
 /* ============================================================
    17. Responsive
    ============================================================ */

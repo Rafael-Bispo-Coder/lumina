@@ -27,6 +27,11 @@
  */
 
 /** @type {Teacher[]} */
+/**
+ * WARNING: Passwords are stored as plain text here for prototype purposes ONLY.
+ * In production, NEVER store or compare plain-text passwords.
+ * Use a secure hashing algorithm (e.g., bcrypt) on the server side.
+ */
 const TEACHERS = [
   {
     id: 1,
